@@ -6,6 +6,6 @@ public class MainTest {
 
     @Test
     public void test(){
-
+        System.out.println("test");
     }
 }
