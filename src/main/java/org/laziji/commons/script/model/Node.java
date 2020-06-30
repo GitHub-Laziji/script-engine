@@ -1,15 +1,13 @@
 package org.laziji.commons.script.model;
 
+import org.laziji.commons.script.exception.CompileException;
+
 public interface Node {
 
     String getSegment();
 
-    String run();
+    Object run()  throws CompileException;
 
-    boolean test();
-
-    void init();
-
-    boolean isInitialized();
+    void compile() throws CompileException;
 
 }
