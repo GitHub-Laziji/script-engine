@@ -5,10 +5,9 @@ import org.laziji.commons.script.exception.RunException;
 
 public interface Node {
 
-    String getSegment();
+    void compile() throws CompileException;
 
     Object run()  throws RunException;
 
-    void compile() throws CompileException;
-
+    String getSegment();
 }
