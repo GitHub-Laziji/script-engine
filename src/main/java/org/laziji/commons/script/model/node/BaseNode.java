@@ -1,4 +1,4 @@
-package org.laziji.commons.script.model;
+package org.laziji.commons.script.model.node;
 
 public abstract class BaseNode implements Node {
 

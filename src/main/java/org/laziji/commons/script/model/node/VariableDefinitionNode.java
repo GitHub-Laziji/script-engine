@@ -1,11 +1,17 @@
-package org.laziji.commons.script.model;
+package org.laziji.commons.script.model.node;
 
 import org.laziji.commons.script.exception.CompileException;
 import org.laziji.commons.script.exception.RunException;
+import org.laziji.commons.script.model.value.Value;
+import org.laziji.commons.script.model.value.VariableValue;
+
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 public class VariableDefinitionNode extends BaseNode {
 
-    private VariableNode variableNode;
+    private VariableValue variableValue;
 
     public VariableDefinitionNode(String segment) {
         super(segment);
@@ -16,12 +22,13 @@ public class VariableDefinitionNode extends BaseNode {
         if (!segment.startsWith("let ")) {
             throw new CompileException("Expect 'let' got '%s'", segment.substring(0, Math.min(segment.length(), 4)));
         }
-        this.variableNode = new VariableNode(segment.substring(3));
-        this.variableNode.compile();
+        if(!Pattern.compile("").matcher(segment.substring(3)).matches()){
+            throw new CompileException();
+        }
     }
 
     @Override
-    public Object run() throws RunException {
+    public Object run(List<Map<String, Value>> contexts) throws RunException {
         return null;
     }
 }
