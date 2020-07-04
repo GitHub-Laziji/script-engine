@@ -3,14 +3,15 @@ package org.laziji.commons.script.model.node;
 import org.laziji.commons.script.exception.CompileException;
 import org.laziji.commons.script.exception.RunException;
 import org.laziji.commons.script.model.value.Value;
-import org.laziji.commons.script.model.value.VariableValue;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class VariableNode extends BaseNode {
 
-    private VariableValue variableValue;
+    private static final Pattern nameReg = Pattern.compile("^[a-zA-Z_][a-zA-Z_0-9]*$");
+    private String name;
 
     public VariableNode (String segment) {
         super(segment);
@@ -18,7 +19,9 @@ public class VariableNode extends BaseNode {
 
     @Override
     public void compile() throws CompileException {
-
+        if(!nameReg.matcher(this.segment).matches()){
+            throw new CompileException();
+        }
     }
 
     @Override
