@@ -13,13 +13,13 @@ public class VariableNode extends BaseNode {
     private static final Pattern nameReg = Pattern.compile("^[a-zA-Z_][a-zA-Z_0-9]*$");
     private String name;
 
-    public VariableNode (String segment) {
+    public VariableNode(String segment) {
         super(segment);
     }
 
     @Override
     public void compile() throws CompileException {
-        if(!nameReg.matcher(this.segment).matches()){
+        if (!nameReg.matcher(this.segment).matches()) {
             throw new CompileException();
         }
         this.name = segment;
@@ -27,7 +27,14 @@ public class VariableNode extends BaseNode {
 
     @Override
     public Value run(List<Map<String, Value>> contexts) throws RunException {
-        return null;
+        for (int i = contexts.size() - 1; i >= 0; i--) {
+            Map<String, Value> context = contexts.get(i);
+            Value value = context.get(name);
+            if (value != null) {
+                return value;
+            }
+        }
+        throw new RunException("%s undefined", name);
     }
 
     public String getName() {
