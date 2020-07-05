@@ -2,10 +2,8 @@ package org.laziji.commons.script.model.node;
 
 import org.laziji.commons.script.exception.CompileException;
 import org.laziji.commons.script.exception.RunException;
-import org.laziji.commons.script.model.value.UndefinedValue;
 import org.laziji.commons.script.model.value.Value;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -20,13 +18,13 @@ public class AssignmentNode extends BaseNode {
 
     @Override
     public void compile() throws CompileException {
-        String[] segments = this.segment.split("\\s+", 3);
-        if (segments.length != 3 || !"=".equals(segments[1])) {
+        String[] segments = this.segment.split("=", 2);
+        if (segments.length != 2) {
             throw new CompileException();
         }
         this.variableNode = new VariableNode(segments[0]);
         this.variableNode.compile();
-        this.expressionNode = new ExpressionNode(segments[2]);
+        this.expressionNode = new ExpressionNode(segments[1]);
         this.expressionNode.compile();
     }
 
