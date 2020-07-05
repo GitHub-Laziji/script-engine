@@ -11,4 +11,9 @@ public class NullValue extends BaseValue {
     public static NullValue create() {
         return instance;
     }
+
+    @Override
+    public String toString() {
+        return "null";
+    }
 }

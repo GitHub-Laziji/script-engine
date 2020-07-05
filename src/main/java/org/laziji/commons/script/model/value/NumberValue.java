@@ -23,4 +23,9 @@ public class NumberValue extends BaseValue {
     public Integer getNumber() {
         return number;
     }
+
+    @Override
+    public String toString() {
+        return number.toString();
+    }
 }

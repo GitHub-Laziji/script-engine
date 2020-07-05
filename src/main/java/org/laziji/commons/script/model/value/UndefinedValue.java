@@ -11,4 +11,9 @@ public class UndefinedValue extends BaseValue {
     public static UndefinedValue create() {
         return instance;
     }
+
+    @Override
+    public String toString() {
+        return "undefined";
+    }
 }
