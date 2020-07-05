@@ -22,10 +22,15 @@ public class VariableNode extends BaseNode {
         if(!nameReg.matcher(this.segment).matches()){
             throw new CompileException();
         }
+        this.name = segment;
     }
 
     @Override
-    public Object run(List<Map<String, Value>> contexts) throws RunException {
+    public Value run(List<Map<String, Value>> contexts) throws RunException {
         return null;
+    }
+
+    public String getName() {
+        return name;
     }
 }

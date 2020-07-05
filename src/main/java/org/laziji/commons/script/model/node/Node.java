@@ -11,7 +11,7 @@ public interface Node {
 
     void compile() throws CompileException;
 
-    Object run(List<Map<String, Value>> contexts) throws RunException;
+    Value run(List<Map<String, Value>> contexts) throws RunException;
 
     String getSegment();
 }

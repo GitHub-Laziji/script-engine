@@ -25,7 +25,7 @@ public class VariableDefinitionNode extends BaseNode {
     }
 
     @Override
-    public Object run(List<Map<String, Value>> contexts) throws RunException {
+    public Value run(List<Map<String, Value>> contexts) throws RunException {
         return null;
     }
 }
