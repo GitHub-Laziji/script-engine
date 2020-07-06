@@ -12,7 +12,6 @@ import java.util.Stack;
 
 public class ExpressionNode extends BaseNode {
 
-    // test
     private List<Node> nodes;
     private List<Operator> operators;
 
@@ -61,40 +60,26 @@ public class ExpressionNode extends BaseNode {
 
     private void parse(int l, int r) throws CompileException {
         int p = 0;
-        for (int i = r; i >= l; i--) {
-            char ch = this.segment.charAt(i);
-            if (ch == '(') {
-                p++;
-            } else if (ch == ')') {
-                p--;
-            } else if (p == 0 && ch == '+') {
-                this.operators.add(Operator.ADD);
-                this.parse(i + 1, r);
-                this.parse(l, i - 1);
-                return;
-            } else if (p == 0 && ch == '-') {
-                this.operators.add(Operator.SUB);
-                this.parse(i + 1, r);
-                this.parse(l, i - 1);
-                return;
-            }
-        }
-        for (int i = r; i >= l; i--) {
-            char ch = this.segment.charAt(i);
-            if (ch == '(') {
-                p++;
-            } else if (ch == ')') {
-                p--;
-            } else if (p == 0 && ch == '*') {
-                this.operators.add(Operator.MUL);
-                this.parse(i + 1, r);
-                this.parse(l, i - 1);
-                return;
-            } else if (p == 0 && ch == '/') {
-                this.operators.add(Operator.DIV);
-                this.parse(i + 1, r);
-                this.parse(l, i - 1);
-                return;
+        for (char[] operators : new char[][]{{'+', '-'}, {'*', '/'}}) {
+            for (int i = r; i >= l; i--) {
+                char ch = this.segment.charAt(i);
+                if (ch == '(') {
+                    p++;
+                } else if (ch == ')') {
+                    p--;
+                }
+                if (p != 0) {
+                    continue;
+                }
+                for (char operator : operators) {
+                    if (ch != operator) {
+                        continue;
+                    }
+                    this.operators.add(Operator.match(operator));
+                    this.parse(i + 1, r);
+                    this.parse(l, i - 1);
+                    return;
+                }
             }
         }
         if (this.segment.charAt(l) == '(') {
@@ -107,6 +92,19 @@ public class ExpressionNode extends BaseNode {
     }
 
     private enum Operator {
-        ADD, SUB, MUL, DIV
+        ADD, SUB, MUL, DIV;
+
+        public static Operator match(char operator) {
+            if (operator == '+') {
+                return ADD;
+            } else if (operator == '-') {
+                return SUB;
+            } else if (operator == '*') {
+                return MUL;
+            } else if (operator == '/') {
+                return DIV;
+            }
+            return null;
+        }
     }
 }

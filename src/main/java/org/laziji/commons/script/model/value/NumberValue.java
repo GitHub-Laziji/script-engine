@@ -24,6 +24,33 @@ public class NumberValue extends BaseValue {
     }
 
     @Override
+    public Value subtract(Value o) throws OperationException {
+        if (o instanceof NumberValue) {
+            this.number -= ((NumberValue) o).getNumber();
+            return this;
+        }
+        throw new OperationException();
+    }
+
+    @Override
+    public Value multiply(Value o) throws OperationException {
+        if (o instanceof NumberValue) {
+            this.number *= ((NumberValue) o).getNumber();
+            return this;
+        }
+        throw new OperationException();
+    }
+
+    @Override
+    public Value divide(Value o) throws OperationException {
+        if (o instanceof NumberValue) {
+            this.number /= ((NumberValue) o).getNumber();
+            return this;
+        }
+        throw new OperationException();
+    }
+
+    @Override
     public NumberValue copy() {
         return new NumberValue(this.number);
     }

@@ -1,6 +1,7 @@
 package org.laziji.commons.script.model.node;
 
 import org.laziji.commons.script.exception.CompileException;
+import org.laziji.commons.script.exception.OperationException;
 import org.laziji.commons.script.exception.RunException;
 import org.laziji.commons.script.model.value.Value;
 
@@ -29,7 +30,7 @@ public class AssignmentNode extends BaseNode {
     }
 
     @Override
-    public Value run(List<Map<String, Value>> contexts) throws RunException {
+    public Value run(List<Map<String, Value>> contexts) throws RunException, OperationException {
         Map<String, Value> context = contexts.get(contexts.size() - 1);
         String name = this.variableNode.getName();
         if (context.get(name) == null) {

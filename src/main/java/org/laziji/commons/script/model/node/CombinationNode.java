@@ -1,6 +1,7 @@
 package org.laziji.commons.script.model.node;
 
 import org.laziji.commons.script.exception.CompileException;
+import org.laziji.commons.script.exception.OperationException;
 import org.laziji.commons.script.exception.RunException;
 import org.laziji.commons.script.model.value.Value;
 
@@ -59,18 +60,12 @@ public class CombinationNode extends BaseNode {
     }
 
     @Override
-    public Value run(List<Map<String, Value>> contexts) throws RunException {
+    public Value run(List<Map<String, Value>> contexts) throws RunException, OperationException {
         for (Node node : this.nodes) {
             node.run(contexts);
         }
         return null;
     }
 
-    public static void main(String[] args) throws CompileException, RunException {
-        Map<String, Value> context = new HashMap<>();
-        CombinationNode node = new CombinationNode("let a;let b;a = 1+2;b = a+a+3;");
-        node.compile();
-        node.run(Collections.singletonList(context));
-        System.out.println(context.get("b").toString());
-    }
+
 }
