@@ -6,8 +6,14 @@ import org.laziji.commons.script.model.value.Value;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class FunctionDefinitionNode extends BaseNode{
+public class FunctionDefinitionNode extends BaseNode {
+
+    private static final Pattern reg = Pattern.compile("^function\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(\\)\\s*\\{(.*)}$");
+
+    private String name;
 
     public FunctionDefinitionNode(String segment) {
         super(segment);
@@ -15,6 +21,10 @@ public class FunctionDefinitionNode extends BaseNode{
 
     @Override
     public void compile() throws CompileException {
+        if (!this.segment.startsWith("function ")) {
+            throw new CompileException();
+        }
+        Matcher matcher = reg.matcher(this.segment);
 
     }
 
