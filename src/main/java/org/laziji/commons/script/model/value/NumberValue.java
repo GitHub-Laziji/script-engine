@@ -1,5 +1,7 @@
 package org.laziji.commons.script.model.value;
 
+import org.laziji.commons.script.exception.OperationException;
+
 public class NumberValue extends BaseValue {
 
     private Integer number;
@@ -12,12 +14,18 @@ public class NumberValue extends BaseValue {
         this.number = number;
     }
 
-    public NumberValue add(Value o) {
+    @Override
+    public Value add(Value o) throws OperationException {
         if (o instanceof NumberValue) {
             this.number += ((NumberValue) o).getNumber();
             return this;
         }
-        return this;
+        throw new OperationException();
+    }
+
+    @Override
+    public NumberValue copy() {
+        return new NumberValue(this.number);
     }
 
     public Integer getNumber() {
