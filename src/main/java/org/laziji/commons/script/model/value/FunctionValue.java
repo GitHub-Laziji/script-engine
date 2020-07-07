@@ -4,18 +4,18 @@ import org.laziji.commons.script.exception.OperationException;
 import org.laziji.commons.script.exception.RunException;
 import org.laziji.commons.script.model.context.Context;
 import org.laziji.commons.script.model.context.FunctionContext;
-import org.laziji.commons.script.model.node.Node;
+import org.laziji.commons.script.model.node.CombinationNode;
 
 import java.util.List;
 import java.util.Stack;
 
 public class FunctionValue extends BaseValue {
 
-    private List<Node> nodes;
+    private CombinationNode node;
     private List<String> parameterNames;
 
-    public FunctionValue(List<Node> nodes, List<String> parameterNames) {
-        this.nodes = nodes;
+    public FunctionValue(CombinationNode node, List<String> parameterNames) {
+        this.node = node;
         this.parameterNames = parameterNames;
     }
 
@@ -26,12 +26,7 @@ public class FunctionValue extends BaseValue {
             Value value = i < parameters.size() ? parameters.get(i) : UndefinedValue.create();
             context.put(this.parameterNames.get(i), value);
         }
-        for (Node node : this.nodes) {
-            if (context.isClose()) {
-                break;
-            }
-            node.run(contexts);
-        }
+        node.run(contexts);
         contexts.pop();
         Value returnValue = context.getReturnValue();
         return returnValue == null ? UndefinedValue.create() : returnValue;

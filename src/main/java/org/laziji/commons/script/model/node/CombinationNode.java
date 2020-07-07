@@ -63,6 +63,9 @@ public class CombinationNode extends BaseNode {
     @Override
     public Value run(Stack<Context> contexts) throws RunException, OperationException {
         for (Node node : this.nodes) {
+            if (contexts.peek().isClose()) {
+                return null;
+            }
             node.run(contexts);
         }
         return null;

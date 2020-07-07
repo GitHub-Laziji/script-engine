@@ -4,6 +4,7 @@ import org.laziji.commons.script.exception.CompileException;
 import org.laziji.commons.script.exception.OperationException;
 import org.laziji.commons.script.exception.RunException;
 import org.laziji.commons.script.model.context.Context;
+import org.laziji.commons.script.model.context.FunctionContext;
 import org.laziji.commons.script.model.value.UndefinedValue;
 import org.laziji.commons.script.model.value.Value;
 
@@ -12,7 +13,6 @@ import java.util.Stack;
 public class ReturnNode extends BaseNode {
 
     private ExpressionNode expressionNode;
-    private Value value;
 
     public ReturnNode(String segment) {
         super(segment);
@@ -21,7 +21,7 @@ public class ReturnNode extends BaseNode {
     @Override
     public void compile() throws CompileException {
         if (this.segment.equals("return")) {
-            this.value = UndefinedValue.create();
+
             return;
         }
         if (!this.segment.startsWith("return ")) {
@@ -33,13 +33,18 @@ public class ReturnNode extends BaseNode {
 
     @Override
     public Value run(Stack<Context> contexts) throws RunException, OperationException {
+        Value value = UndefinedValue.create();
         if (this.expressionNode != null) {
-            this.value = this.expressionNode.run(contexts);
+            value = this.expressionNode.run(contexts);
         }
-        return null;
-    }
-
-    public Value getValue() {
-        return value;
+        for (int i = contexts.size() - 1; i >= 0; i--) {
+            Context context = contexts.get(i);
+            context.close();
+            if (context instanceof FunctionContext) {
+                ((FunctionContext) context).setReturnValue(value);
+                return null;
+            }
+        }
+        throw new RunException();
     }
 }
