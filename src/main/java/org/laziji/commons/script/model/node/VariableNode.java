@@ -2,10 +2,10 @@ package org.laziji.commons.script.model.node;
 
 import org.laziji.commons.script.exception.CompileException;
 import org.laziji.commons.script.exception.RunException;
+import org.laziji.commons.script.model.context.Context;
 import org.laziji.commons.script.model.value.Value;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Stack;
 import java.util.regex.Pattern;
 
 public class VariableNode extends BaseNode {
@@ -26,9 +26,9 @@ public class VariableNode extends BaseNode {
     }
 
     @Override
-    public Value run(List<Map<String, Value>> contexts) throws RunException {
+    public Value run(Stack<Context> contexts) throws RunException {
         for (int i = contexts.size() - 1; i >= 0; i--) {
-            Map<String, Value> context = contexts.get(i);
+            Context context = contexts.get(i);
             Value value = context.get(name);
             if (value != null) {
                 return value;

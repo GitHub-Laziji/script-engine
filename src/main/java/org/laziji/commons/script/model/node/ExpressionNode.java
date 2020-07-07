@@ -3,11 +3,11 @@ package org.laziji.commons.script.model.node;
 import org.laziji.commons.script.exception.CompileException;
 import org.laziji.commons.script.exception.OperationException;
 import org.laziji.commons.script.exception.RunException;
+import org.laziji.commons.script.model.context.Context;
 import org.laziji.commons.script.model.value.Value;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Stack;
 
 public class ExpressionNode extends BaseNode {
@@ -28,7 +28,7 @@ public class ExpressionNode extends BaseNode {
     }
 
     @Override
-    public Value run(List<Map<String, Value>> contexts) throws RunException, OperationException {
+    public Value run(Stack<Context> contexts) throws RunException, OperationException {
         Stack<Value> values = new Stack<>();
         Stack<Operator> operators = new Stack<>();
         for (Node node : this.nodes) {

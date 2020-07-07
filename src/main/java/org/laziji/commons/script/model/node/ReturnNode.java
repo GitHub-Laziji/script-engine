@@ -3,11 +3,11 @@ package org.laziji.commons.script.model.node;
 import org.laziji.commons.script.exception.CompileException;
 import org.laziji.commons.script.exception.OperationException;
 import org.laziji.commons.script.exception.RunException;
+import org.laziji.commons.script.model.context.Context;
 import org.laziji.commons.script.model.value.UndefinedValue;
 import org.laziji.commons.script.model.value.Value;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Stack;
 
 public class ReturnNode extends BaseNode {
 
@@ -32,7 +32,7 @@ public class ReturnNode extends BaseNode {
     }
 
     @Override
-    public Value run(List<Map<String, Value>> contexts) throws RunException, OperationException {
+    public Value run(Stack<Context> contexts) throws RunException, OperationException {
         if (this.expressionNode != null) {
             this.value = this.expressionNode.run(contexts);
         }

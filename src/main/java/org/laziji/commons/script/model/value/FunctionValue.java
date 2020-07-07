@@ -2,13 +2,12 @@ package org.laziji.commons.script.model.value;
 
 import org.laziji.commons.script.exception.OperationException;
 import org.laziji.commons.script.exception.RunException;
+import org.laziji.commons.script.model.context.Context;
+import org.laziji.commons.script.model.context.FunctionContext;
 import org.laziji.commons.script.model.node.Node;
-import org.laziji.commons.script.model.node.ReturnNode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Stack;
 
 public class FunctionValue extends BaseValue {
 
@@ -20,20 +19,21 @@ public class FunctionValue extends BaseValue {
         this.parameterNames = parameterNames;
     }
 
-    public Value call(List<Map<String, Value>> contexts, List<Value> parameters) throws RunException, OperationException {
-        Map<String, Value> context = new HashMap<>();
+    public Value call(Stack<Context> contexts, List<Value> parameters) throws RunException, OperationException {
+        FunctionContext context = new FunctionContext();
+        contexts.push(context);
         for (int i = 0; i < this.parameterNames.size(); i++) {
             Value value = i < parameters.size() ? parameters.get(i) : UndefinedValue.create();
             context.put(this.parameterNames.get(i), value);
         }
-        List<Map<String, Value>> newContexts = new ArrayList<>(contexts);
-        newContexts.add(context);
         for (Node node : this.nodes) {
-            node.run(newContexts);
-            if (node instanceof ReturnNode) {
-                return ((ReturnNode) node).getValue();
+            if (context.isClose()) {
+                break;
             }
+            node.run(contexts);
         }
-        return UndefinedValue.create();
+        contexts.pop();
+        Value returnValue = context.getReturnValue();
+        return returnValue == null ? UndefinedValue.create() : returnValue;
     }
 }

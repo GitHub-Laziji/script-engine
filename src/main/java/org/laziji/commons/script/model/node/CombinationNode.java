@@ -3,6 +3,7 @@ package org.laziji.commons.script.model.node;
 import org.laziji.commons.script.exception.CompileException;
 import org.laziji.commons.script.exception.OperationException;
 import org.laziji.commons.script.exception.RunException;
+import org.laziji.commons.script.model.context.Context;
 import org.laziji.commons.script.model.value.Value;
 
 import java.util.*;
@@ -60,7 +61,7 @@ public class CombinationNode extends BaseNode {
     }
 
     @Override
-    public Value run(List<Map<String, Value>> contexts) throws RunException, OperationException {
+    public Value run(Stack<Context> contexts) throws RunException, OperationException {
         for (Node node : this.nodes) {
             node.run(contexts);
         }
