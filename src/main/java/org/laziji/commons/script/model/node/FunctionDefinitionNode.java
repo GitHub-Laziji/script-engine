@@ -55,10 +55,4 @@ public class FunctionDefinitionNode extends BaseNode {
         context.put(this.name, new FunctionValue(this.combinationNode, this.parameterNames));
         return functionValue;
     }
-
-    public static void main(String[] args) {
-        System.out.println(reg.matcher("function func(a,b){\n" +
-                "\treturn a+b;\n" +
-                "}").matches());//
-    }
 }

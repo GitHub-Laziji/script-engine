@@ -40,7 +40,6 @@ public class CombinationNode extends BaseNode {
             }
             if (p1 == 0 && p2 == 0 && p3 == 0 && ch == ';') {
                 String s = this.segment.substring(start, i);
-                System.out.println(s);
                 Node matchNode = null;
                 for (Node node : new Node[]{
                         new FunctionDefinitionNode(s),

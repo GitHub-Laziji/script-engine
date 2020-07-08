@@ -9,8 +9,13 @@ import org.laziji.commons.script.model.value.UndefinedValue;
 import org.laziji.commons.script.model.value.Value;
 
 import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ReturnNode extends BaseNode {
+
+    private static final Pattern reg = Pattern.compile("^\\s*return\\s+([\\s\\S]+)$");
+
 
     private ExpressionNode expressionNode;
 
@@ -20,15 +25,15 @@ public class ReturnNode extends BaseNode {
 
     @Override
     public void compile() throws CompileException {
-        if (this.segment.equals("return")) {
-
-            return;
-        }
-        if (!this.segment.startsWith("return ")) {
+        Matcher matcher = reg.matcher(this.segment);
+        if (!matcher.matches()) {
             throw new CompileException();
         }
-        this.expressionNode = new ExpressionNode(this.segment.substring(7));
-        this.expressionNode.compile();
+        String expression = matcher.replaceAll("$1").trim();
+        if (!expression.isEmpty()) {
+            this.expressionNode = new ExpressionNode(this.segment.substring(7));
+            this.expressionNode.compile();
+        }
     }
 
     @Override
