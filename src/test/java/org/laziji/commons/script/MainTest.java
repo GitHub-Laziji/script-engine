@@ -7,11 +7,7 @@ import org.laziji.commons.script.exception.RunException;
 import org.laziji.commons.script.model.context.BlockContext;
 import org.laziji.commons.script.model.context.Context;
 import org.laziji.commons.script.model.node.CombinationNode;
-import org.laziji.commons.script.model.value.Value;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Stack;
 
 public class MainTest {
@@ -20,9 +16,16 @@ public class MainTest {
     public void test() throws CompileException, RunException, OperationException {
         Stack<Context> contexts = new Stack<>();
         contexts.push(new BlockContext());
-        CombinationNode node = new CombinationNode("let a;let b;a = 1+2;b = a*a+3;");
+        CombinationNode node = new CombinationNode(
+                "function func(a,b){\n" +
+                        "\treturn a+b;\n" +
+                        "};\n" +
+                        "\n" +
+                        "let a=3;\n" +
+                        "let b=4;\n" +
+                        "let c=a + 3 + func(a+1,b*2);");
         node.compile();
         node.run(contexts);
-        System.out.println(contexts.get(0).get("b").toString());
+        System.out.println(contexts.get(0).get("c").toString());
     }
 }

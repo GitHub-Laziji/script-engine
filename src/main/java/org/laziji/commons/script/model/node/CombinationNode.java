@@ -6,7 +6,9 @@ import org.laziji.commons.script.exception.RunException;
 import org.laziji.commons.script.model.context.Context;
 import org.laziji.commons.script.model.value.Value;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 public class CombinationNode extends BaseNode {
 
@@ -32,7 +34,7 @@ public class CombinationNode extends BaseNode {
             } else if (ch == ']') {
                 p2--;
             } else if (ch == '{') {
-                p3--;
+                p3++;
             } else if (ch == '}') {
                 p3--;
             }
@@ -41,8 +43,10 @@ public class CombinationNode extends BaseNode {
                 System.out.println(s);
                 Node matchNode = null;
                 for (Node node : new Node[]{
+                        new FunctionDefinitionNode(s),
                         new VariableDefinitionNode(s),
-                        new AssignmentNode(s)
+                        new AssignmentNode(s),
+                        new ReturnNode(s)
                 }) {
                     try {
                         node.compile();

@@ -18,7 +18,11 @@ public class SingleNode extends BaseNode {
 
     @Override
     public void compile() throws CompileException {
-        for (Node node : new Node[]{new ConstantNode(this.segment), new VariableNode(this.segment)}) {
+        for (Node node : new Node[]{
+                new ConstantNode(this.segment),
+                new VariableNode(this.segment),
+                new FunctionNode(this.segment)
+        }) {
             try {
                 node.compile();
                 this.node = node;

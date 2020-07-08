@@ -38,8 +38,8 @@ public class ExpressionNode extends BaseNode {
             operators.push(operator);
         }
         while (values.size() > 1) {
-            Value a = values.pop();
-            Value b = values.pop();
+            Value a = values.pop().copy();
+            Value b = values.pop().copy();
             switch (operators.pop()) {
                 case ADD:
                     values.push(a.add(b));

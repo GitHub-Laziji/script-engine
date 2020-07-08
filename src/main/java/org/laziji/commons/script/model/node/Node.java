@@ -12,7 +12,7 @@ public interface Node {
 
     void compile() throws CompileException;
 
-    Value run(Stack<Context> contexts) throws RunException, OperationException;
+    Value  run(Stack<Context> contexts) throws RunException, OperationException;
 
     String getSegment();
 }
