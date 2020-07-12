@@ -8,8 +8,13 @@ public class UndefinedValue extends BaseValue {
 
     }
 
-    public static UndefinedValue create() {
+    public static UndefinedValue getInstance() {
         return instance;
+    }
+
+    @Override
+    public BooleanValue toBoolean() {
+        return BooleanValue.getFalseInstance();
     }
 
     @Override

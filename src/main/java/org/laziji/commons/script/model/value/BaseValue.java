@@ -25,6 +25,46 @@ public abstract class BaseValue implements Value {
     }
 
     @Override
+    public BooleanValue greater(Value o) throws OperationException {
+        throw new OperationException("Unrealized.");
+    }
+
+    @Override
+    public BooleanValue greaterOrEqual(Value o) throws OperationException {
+        throw new OperationException("Unrealized.");
+    }
+
+    @Override
+    public BooleanValue smaller(Value o) throws OperationException {
+        throw new OperationException("Unrealized.");
+    }
+
+    @Override
+    public BooleanValue smallerOrEqual(Value o) throws OperationException {
+        throw new OperationException("Unrealized.");
+    }
+
+    @Override
+    public BooleanValue equal(Value o) throws OperationException {
+        throw new OperationException("Unrealized.");
+    }
+
+    @Override
+    public BooleanValue and(Value o) throws OperationException {
+        throw new OperationException("Unrealized.");
+    }
+
+    @Override
+    public BooleanValue or(Value o) throws OperationException {
+        throw new OperationException("Unrealized.");
+    }
+
+    @Override
+    public BooleanValue toBoolean() {
+        return BooleanValue.getTrueInstance();
+    }
+
+    @Override
     public Value copy() {
         return this;
     }

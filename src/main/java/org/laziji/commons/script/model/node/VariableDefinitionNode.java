@@ -42,7 +42,7 @@ public class VariableDefinitionNode extends BaseNode {
         if (context.get(this.name) != null) {
             throw new RunException();
         }
-        Value value = this.expressionNode == null ? UndefinedValue.create() : this.expressionNode.run(contexts);
+        Value value = this.expressionNode == null ? UndefinedValue.getInstance() : this.expressionNode.run(contexts);
         context.put(name, value);
         return value;
     }

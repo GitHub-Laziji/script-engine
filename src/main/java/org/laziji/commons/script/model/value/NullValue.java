@@ -8,8 +8,13 @@ public class NullValue extends BaseValue {
 
     }
 
-    public static NullValue create() {
+    public static NullValue getInstance() {
         return instance;
+    }
+
+    @Override
+    public BooleanValue toBoolean() {
+        return BooleanValue.getFalseInstance();
     }
 
     @Override

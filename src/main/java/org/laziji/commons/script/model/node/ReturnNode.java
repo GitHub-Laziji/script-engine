@@ -38,7 +38,7 @@ public class ReturnNode extends BaseNode {
 
     @Override
     public Value run(Stack<Context> contexts) throws RunException, OperationException {
-        Value value = UndefinedValue.create();
+        Value value = UndefinedValue.getInstance();
         if (this.expressionNode != null) {
             value = this.expressionNode.run(contexts);
         }

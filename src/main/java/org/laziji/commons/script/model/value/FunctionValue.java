@@ -23,12 +23,14 @@ public class FunctionValue extends BaseValue {
         FunctionContext context = new FunctionContext();
         contexts.push(context);
         for (int i = 0; i < this.parameterNames.size(); i++) {
-            Value value = i < parameters.size() ? parameters.get(i) : UndefinedValue.create();
+            Value value = i < parameters.size() ? parameters.get(i) : UndefinedValue.getInstance();
             context.put(this.parameterNames.get(i), value);
         }
         node.run(contexts);
         contexts.pop();
         Value returnValue = context.getReturnValue();
-        return returnValue == null ? UndefinedValue.create() : returnValue;
+        return returnValue == null ? UndefinedValue.getInstance() : returnValue;
     }
+
+
 }

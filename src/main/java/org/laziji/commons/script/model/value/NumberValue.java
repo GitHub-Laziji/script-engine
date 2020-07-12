@@ -55,6 +55,11 @@ public class NumberValue extends BaseValue {
         return new NumberValue(this.number);
     }
 
+    @Override
+    public BooleanValue toBoolean() {
+        return number == 0 ? BooleanValue.getFalseInstance() : BooleanValue.getTrueInstance();
+    }
+
     public Integer getNumber() {
         return number;
     }
