@@ -24,11 +24,8 @@ public class BooleanValue extends BaseValue {
         return this;
     }
 
-    public boolean isValue() {
+    public boolean getValue() {
         return value;
     }
 
-    public void setValue(boolean value) {
-        this.value = value;
-    }
 }

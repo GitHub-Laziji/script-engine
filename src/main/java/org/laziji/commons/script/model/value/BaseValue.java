@@ -50,13 +50,19 @@ public abstract class BaseValue implements Value {
     }
 
     @Override
-    public BooleanValue and(Value o) throws OperationException {
-        throw new OperationException("Unrealized.");
+    public BooleanValue and(Value o) {
+        if (this.toBoolean().getValue() && o.toBoolean().getValue()) {
+            return BooleanValue.getTrueInstance();
+        }
+        return BooleanValue.getFalseInstance();
     }
 
     @Override
-    public BooleanValue or(Value o) throws OperationException {
-        throw new OperationException("Unrealized.");
+    public BooleanValue or(Value o) {
+        if (this.toBoolean().getValue() || o.toBoolean().getValue()) {
+            return BooleanValue.getTrueInstance();
+        }
+        return BooleanValue.getFalseInstance();
     }
 
     @Override

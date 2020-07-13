@@ -4,20 +4,20 @@ import org.laziji.commons.script.exception.OperationException;
 
 public class NumberValue extends BaseValue {
 
-    private Integer number;
+    private Integer value;
 
-    public NumberValue(String number) {
-        this.number = Integer.parseInt(number.trim());
+    public NumberValue(String value) {
+        this.value = Integer.parseInt(value.trim());
     }
 
-    public NumberValue(Integer number) {
-        this.number = number;
+    public NumberValue(Integer value) {
+        this.value = value;
     }
 
     @Override
     public Value add(Value o) throws OperationException {
         if (o instanceof NumberValue) {
-            this.number += ((NumberValue) o).getNumber();
+            this.value += ((NumberValue) o).getValue();
             return this;
         }
         throw new OperationException();
@@ -26,7 +26,7 @@ public class NumberValue extends BaseValue {
     @Override
     public Value subtract(Value o) throws OperationException {
         if (o instanceof NumberValue) {
-            this.number -= ((NumberValue) o).getNumber();
+            this.value -= ((NumberValue) o).getValue();
             return this;
         }
         throw new OperationException();
@@ -35,7 +35,7 @@ public class NumberValue extends BaseValue {
     @Override
     public Value multiply(Value o) throws OperationException {
         if (o instanceof NumberValue) {
-            this.number *= ((NumberValue) o).getNumber();
+            this.value *= ((NumberValue) o).getValue();
             return this;
         }
         throw new OperationException();
@@ -44,7 +44,7 @@ public class NumberValue extends BaseValue {
     @Override
     public Value divide(Value o) throws OperationException {
         if (o instanceof NumberValue) {
-            this.number /= ((NumberValue) o).getNumber();
+            this.value /= ((NumberValue) o).getValue();
             return this;
         }
         throw new OperationException();
@@ -52,20 +52,20 @@ public class NumberValue extends BaseValue {
 
     @Override
     public NumberValue copy() {
-        return new NumberValue(this.number);
+        return new NumberValue(this.value);
     }
 
     @Override
     public BooleanValue toBoolean() {
-        return number == 0 ? BooleanValue.getFalseInstance() : BooleanValue.getTrueInstance();
+        return value == 0 ? BooleanValue.getFalseInstance() : BooleanValue.getTrueInstance();
     }
 
-    public Integer getNumber() {
-        return number;
+    public Integer getValue() {
+        return value;
     }
 
     @Override
     public String toString() {
-        return number.toString();
+        return value.toString();
     }
 }
