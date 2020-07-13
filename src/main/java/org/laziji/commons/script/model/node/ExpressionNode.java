@@ -8,6 +8,7 @@ import org.laziji.commons.script.model.value.Value;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Stack;
 
 public class ExpressionNode extends BaseNode {
@@ -53,6 +54,21 @@ public class ExpressionNode extends BaseNode {
                 case DIV:
                     values.push(a.divide(b));
                     break;
+                case GT:
+                    values.push(a.greater(b));
+                    break;
+                case GTEQ:
+                    values.push(a.greaterOrEqual(b));
+                    break;
+                case SL:
+                    values.push(a.smaller(b));
+                    break;
+                case SLEQ:
+                    values.push(a.smallerOrEqual(b));
+                    break;
+                case EQ:
+                    values.push(a.equal(b));
+                    break;
             }
         }
         return values.pop();
@@ -60,7 +76,7 @@ public class ExpressionNode extends BaseNode {
 
     private void parse(int l, int r) throws CompileException {
         int p = 0;
-        for (char[] operators : new char[][]{{'+', '-'}, {'*', '/'}}) {
+        for (String[] operators : new String[][]{{"||"}, {"&&"}, {">", ">=", "<", "<="}, {"+", "-"}, {"*", "/"}}) {
             for (int i = r; i >= l; i--) {
                 char ch = this.segment.charAt(i);
                 if (ch == '(') {
@@ -71,15 +87,29 @@ public class ExpressionNode extends BaseNode {
                 if (p != 0) {
                     continue;
                 }
-                for (char operator : operators) {
-                    if (ch != operator) {
-                        continue;
+                StringBuilder op = new StringBuilder();
+                int ii = i;
+                while (ii >= l) {
+                    char cc = this.segment.charAt(ii);
+                    if (cc != '+' && cc != '-' && cc != '*' && cc != '/' && cc != '>' && cc != '<' && cc != '=') {
+                        break;
                     }
-                    this.operators.add(Operator.match(operator));
-                    this.parse(i + 1, r);
-                    this.parse(l, i - 1);
-                    return;
+                    op.append(cc);
+                    ii--;
                 }
+                if (op.length() > 0) {
+                    String cop = op.reverse().toString();
+                    for (String operator : operators) {
+                        if (!cop.equals(operator)) {
+                            continue;
+                        }
+                        this.operators.add(Operator.match(operator));
+                        this.parse(i + 1, r);
+                        this.parse(l, i - 1);
+                        return;
+                    }
+                }
+
             }
         }
         if (this.segment.charAt(l) == '(') {
@@ -92,17 +122,21 @@ public class ExpressionNode extends BaseNode {
     }
 
     private enum Operator {
-        ADD, SUB, MUL, DIV;
+        ADD("+"), SUB("-"), MUL("*"), DIV("/"),
+        GT(">"), GTEQ(">="), SL("<"), SLEQ("<="), EQ("=="),
+        AND("&&"), OR("||");
 
-        public static Operator match(char operator) {
-            if (operator == '+') {
-                return ADD;
-            } else if (operator == '-') {
-                return SUB;
-            } else if (operator == '*') {
-                return MUL;
-            } else if (operator == '/') {
-                return DIV;
+        private String operator;
+
+        Operator(String operator) {
+            this.operator = operator;
+        }
+
+        public static Operator match(String operator) {
+            for (Operator op : Operator.values()) {
+                if (Objects.equals(op.operator, operator)) {
+                    return op;
+                }
             }
             return null;
         }
