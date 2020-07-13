@@ -4,7 +4,7 @@ import org.laziji.commons.script.exception.OperationException;
 
 public class NumberValue extends BaseValue {
 
-    private Integer value;
+    private int value;
 
     public NumberValue(String value) {
         this.value = Integer.parseInt(value.trim());
@@ -51,6 +51,56 @@ public class NumberValue extends BaseValue {
     }
 
     @Override
+    public BooleanValue greater(Value o) throws OperationException {
+        if (o instanceof NumberValue) {
+            return this.value > ((NumberValue) o).getValue() ?
+                    BooleanValue.getTrueInstance() :
+                    BooleanValue.getFalseInstance();
+        }
+        throw new OperationException();
+    }
+
+    @Override
+    public BooleanValue greaterOrEqual(Value o) throws OperationException {
+        if (o instanceof NumberValue) {
+            return this.value >= ((NumberValue) o).getValue() ?
+                    BooleanValue.getTrueInstance() :
+                    BooleanValue.getFalseInstance();
+        }
+        throw new OperationException();
+    }
+
+    @Override
+    public BooleanValue smaller(Value o) throws OperationException {
+        if (o instanceof NumberValue) {
+            return this.value < ((NumberValue) o).getValue() ?
+                    BooleanValue.getTrueInstance() :
+                    BooleanValue.getFalseInstance();
+        }
+        throw new OperationException();
+    }
+
+    @Override
+    public BooleanValue smallerOrEqual(Value o) throws OperationException {
+        if (o instanceof NumberValue) {
+            return this.value <= ((NumberValue) o).getValue() ?
+                    BooleanValue.getTrueInstance() :
+                    BooleanValue.getFalseInstance();
+        }
+        throw new OperationException();
+    }
+
+    @Override
+    public BooleanValue equal(Value o) throws OperationException {
+        if (o instanceof NumberValue) {
+            return this.value == ((NumberValue) o).getValue() ?
+                    BooleanValue.getTrueInstance() :
+                    BooleanValue.getFalseInstance();
+        }
+        throw new OperationException();
+    }
+
+    @Override
     public NumberValue copy() {
         return new NumberValue(this.value);
     }
@@ -60,12 +110,12 @@ public class NumberValue extends BaseValue {
         return value == 0 ? BooleanValue.getFalseInstance() : BooleanValue.getTrueInstance();
     }
 
-    public Integer getValue() {
+    public int getValue() {
         return value;
     }
 
     @Override
     public String toString() {
-        return value.toString();
+        return value + "";
     }
 }
