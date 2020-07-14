@@ -76,7 +76,7 @@ public class ExpressionNode extends BaseNode {
 
     private void parse(int l, int r) throws CompileException {
         int p = 0;
-        for (String[] operators : new String[][]{{"||"}, {"&&"}, {">", ">=", "<", "<="}, {"+", "-"}, {"*", "/"}}) {
+        for (String[] operators : new String[][]{{"||"}, {"&&"}, {">", ">=", "<", "<=","=="}, {"+", "-"}, {"*", "/"}}) {
             for (int i = r; i >= l; i--) {
                 char ch = this.segment.charAt(i);
                 if (ch == '(') {
@@ -105,7 +105,7 @@ public class ExpressionNode extends BaseNode {
                         }
                         this.operators.add(Operator.match(operator));
                         this.parse(i + 1, r);
-                        this.parse(l, i - 1);
+                        this.parse(l, i - op.length());
                         return;
                     }
                 }

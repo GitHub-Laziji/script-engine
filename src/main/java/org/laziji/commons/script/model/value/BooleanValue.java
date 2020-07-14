@@ -3,7 +3,7 @@ package org.laziji.commons.script.model.value;
 public class BooleanValue extends BaseValue {
 
     private static final BooleanValue trueInstance = new BooleanValue(true);
-    private static final BooleanValue falseInstance = new BooleanValue(true);
+    private static final BooleanValue falseInstance = new BooleanValue(false);
 
     private boolean value;
 

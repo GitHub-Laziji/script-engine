@@ -45,11 +45,13 @@ public class CombinationNode extends BaseNode {
                         new FunctionDefinitionNode(s),
                         new VariableDefinitionNode(s),
                         new AssignmentNode(s),
+                        new IfNode(s),
                         new ReturnNode(s)
                 }) {
                     try {
                         node.compile();
                         matchNode = node;
+                        break;
                     } catch (CompileException ignored) {
 
                     }
