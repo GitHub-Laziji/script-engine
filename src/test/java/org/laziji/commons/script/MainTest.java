@@ -20,9 +20,9 @@ public class MainTest {
                 "   function sum (n) {\n" +
                         "   \tif (n==1) {\n" +
                         "   \t\treturn 1;\n" +
-                        "   \t};\n" +
+                        "   \t}\n" +
                         "   \treturn n+sum(n-1);\n" +
-                        "   };\n" +
+                        "   }\n" +
                         "   let a=3;\n" +
                         "   let b=4;\n" +
                         "   let c=a+3+sum(b);\n");

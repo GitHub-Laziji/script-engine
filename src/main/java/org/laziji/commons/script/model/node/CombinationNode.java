@@ -6,9 +6,7 @@ import org.laziji.commons.script.exception.RunException;
 import org.laziji.commons.script.model.context.Context;
 import org.laziji.commons.script.model.value.Value;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class CombinationNode extends BaseNode {
 
@@ -22,24 +20,26 @@ public class CombinationNode extends BaseNode {
     public void compile() throws CompileException {
         this.nodes = new ArrayList<>();
         int start = 0;
-        int p1 = 0, p2 = 0, p3 = 0;
+        Stack<Character> brackets = new Stack<>();
+        Map<Character, Character> bracketsMatchMap = new HashMap<>();
+        bracketsMatchMap.put(')', '(');
+        bracketsMatchMap.put(']', '[');
+        bracketsMatchMap.put('}', '{');
         for (int i = 0; i < this.segment.length(); i++) {
             char ch = segment.charAt(i);
-            if (ch == '(') {
-                p1++;
-            } else if (ch == ')') {
-                p1--;
-            } else if (ch == '[') {
-                p2++;
-            } else if (ch == ']') {
-                p2--;
-            } else if (ch == '{') {
-                p3++;
-            } else if (ch == '}') {
-                p3--;
+            if (ch == '(' || ch == '[' || ch == '{') {
+                brackets.push(ch);
+            } else if (ch == ')' || ch == ']' || ch == '}') {
+                if (brackets.isEmpty() || !bracketsMatchMap.get(ch).equals(brackets.pop())) {
+                    throw new CompileException();
+                }
             }
-            if (p1 == 0 && p2 == 0 && p3 == 0 && ch == ';') {
-                String s = this.segment.substring(start, i);
+            if (brackets.isEmpty() && (ch == ';' || ch == '}')) {
+                String s = this.segment.substring(start, ch == ';' ? i : (i + 1)).trim();
+                start = i + 1;
+                if (s.isEmpty()) {
+                    continue;
+                }
                 Node matchNode = null;
                 for (Node node : new Node[]{
                         new FunctionDefinitionNode(s),
@@ -60,7 +60,7 @@ public class CombinationNode extends BaseNode {
                     throw new CompileException();
                 }
                 nodes.add(matchNode);
-                start = i + 1;
+
             }
         }
     }
