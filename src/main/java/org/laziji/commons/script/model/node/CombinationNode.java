@@ -46,6 +46,7 @@ public class CombinationNode extends BaseNode {
                         new VariableDefinitionNode(s),
                         new AssignmentNode(s),
                         new IfNode(s),
+                        new WhileNode(s),
                         new ReturnNode(s)
                 }) {
                     try {
@@ -57,6 +58,7 @@ public class CombinationNode extends BaseNode {
                     }
                 }
                 if (matchNode == null) {
+                    System.out.println(s);
                     throw new CompileException();
                 }
                 nodes.add(matchNode);

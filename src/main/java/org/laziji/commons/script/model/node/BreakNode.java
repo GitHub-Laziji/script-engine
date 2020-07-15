@@ -35,6 +35,6 @@ public class BreakNode extends BaseNode {
                 throw new RunException();
             }
         }
-        return null;
+        throw new RunException();
     }
 }

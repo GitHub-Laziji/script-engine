@@ -5,6 +5,7 @@ import org.laziji.commons.script.exception.OperationException;
 import org.laziji.commons.script.exception.RunException;
 import org.laziji.commons.script.model.context.BlockContext;
 import org.laziji.commons.script.model.context.Context;
+import org.laziji.commons.script.model.context.LoopContext;
 import org.laziji.commons.script.model.value.Value;
 
 import java.util.HashMap;
@@ -13,15 +14,15 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class IfNode extends BaseNode {
+public class WhileNode extends BaseNode {
 
-    private static final Pattern preReg = Pattern.compile("^\\s*if\\s*\\([\\s\\S]+$");
+    private static final Pattern preReg = Pattern.compile("^\\s*while\\s*\\([\\s\\S]+$");
     private static final Pattern bodyReg = Pattern.compile("^\\s*\\{([\\s\\S]*)}\\s*$");
 
     private ExpressionNode expressionNode;
     private CombinationNode combinationNode;
 
-    public IfNode(String segment) {
+    public WhileNode(String segment) {
         super(segment);
     }
 
@@ -72,11 +73,17 @@ public class IfNode extends BaseNode {
 
     @Override
     public Value run(Stack<Context> contexts) throws RunException, OperationException {
-        if (this.expressionNode.run(contexts).toBoolean().getValue()) {
+        LoopContext context = new LoopContext();
+        contexts.push(context);
+        while (this.expressionNode.run(contexts).toBoolean().getValue()) {
+            if (context.isClose()) {
+                break;
+            }
             contexts.push(new BlockContext());
             combinationNode.run(contexts);
             contexts.pop();
         }
+        contexts.pop();
         return null;
     }
 }

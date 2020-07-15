@@ -31,14 +31,17 @@ public class AssignmentNode extends BaseNode {
 
     @Override
     public Value run(Stack<Context> contexts) throws RunException, OperationException {
-        Context context = contexts.get(contexts.size() - 1);
-        String name = this.variableNode.getName();
-        if (context.get(name) == null) {
-            throw new RunException();
+        for (int i = contexts.size() - 1; i >= 0; i--) {
+            Context context = contexts.get(i);
+            String name = this.variableNode.getName();
+            if (context.get(name) == null) {
+                continue;
+            }
+            Value value = this.expressionNode.run(contexts);
+            context.put(name, value);
+            return value;
         }
-        Value value = this.expressionNode.run(contexts);
-        context.put(name, value);
-        return value;
+        throw new RunException();
     }
 
 }

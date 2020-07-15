@@ -9,9 +9,15 @@ function sum(n) {
     }
     return n + sum(n - 1);
 };
+
 let a = 3;
 let b = 4;
 let c = a + 3 + sum(b); 
+
+while(a > 0){
+    c = c + a;
+    a = a - 1;
+}
 ```
 
 ```java
@@ -22,15 +28,21 @@ public class MainTest {
         Stack<Context> contexts = new Stack<>();
         contexts.push(new BlockContext());
         CombinationNode node = new CombinationNode(
-                "   function sum (n) {\n" +
-                        "   \tif (n==1) {\n" +
-                        "   \t\treturn 1;\n" +
-                        "   \t}\n" +
-                        "   \treturn n+sum(n-1);\n" +
-                        "   }\n" +
-                        "   let a=3;\n" +
-                        "   let b=4;\n" +
-                        "   let c=a+3+sum(b);\n");
+                        "function sum(n) {\n" +
+                        "  if(n == 1) {\n" +
+                        "    return 1;\n" +
+                        "  }\n" +
+                        "  return n + sum(n - 1);\n" +
+                        "}\n" +
+                        "" +
+                        "let a = 3;\n" +
+                        "let b = 4;\n" +
+                        "let c = a + 3 + sum(b);\n" +
+                        "" +
+                        "while(a > 0) {\n" +
+                        "  c = c + a;\n" +
+                        "  a = a - 1;\n" +
+                        "}");
         node.compile();
         node.run(contexts);
         System.out.println(contexts.get(0).get("c").toString());
