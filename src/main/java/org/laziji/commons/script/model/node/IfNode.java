@@ -25,6 +25,9 @@ public class IfNode extends BaseNode {
 
     @Override
     public void compile() throws CompileException {
+        if (!preReg.matcher(this.segment).matches()) {
+            throw new CompileException();
+        }
         int start = this.segment.indexOf('(');
         if (start == -1) {
             throw new CompileException();
@@ -48,7 +51,7 @@ public class IfNode extends BaseNode {
             throw new CompileException();
         }
 
-        this.expressionNode = new ExpressionNode(this.segment.substring(start+1, end));
+        this.expressionNode = new ExpressionNode(this.segment.substring(start + 1, end));
         this.expressionNode.compile();
 
         String body = this.segment.substring(end + 1);
