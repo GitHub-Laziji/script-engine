@@ -28,21 +28,21 @@ public class MainTest {
         Stack<Context> contexts = new Stack<>();
         contexts.push(new BlockContext());
         CombinationNode node = new CombinationNode(
-                        "function sum(n) {\n" +
-                        "  if(n == 1) {\n" +
-                        "    return 1;\n" +
-                        "  }\n" +
-                        "  return n + sum(n - 1);\n" +
-                        "}\n" +
-                        "" +
-                        "let a = 3;\n" +
-                        "let b = 4;\n" +
-                        "let c = a + 3 + sum(b);\n" +
-                        "" +
-                        "while(a > 0) {\n" +
-                        "  c = c + a;\n" +
-                        "  a = a - 1;\n" +
-                        "}");
+                        "function sum(n) {              \n" +
+                        "  if(n == 1) {                 \n" +
+                        "    return 1;                  \n" +
+                        "  }                            \n" +
+                        "  return n + sum(n - 1);       \n" +
+                        "}                              \n" +
+                        "                               \n" +
+                        "let a = 3;                     \n" +
+                        "let b = 4;                     \n" +
+                        "let c = a + 3 + sum(b);        \n" +
+                        "                               \n" +
+                        "while(a > 0) {                 \n" +
+                        "  c = c + a;                   \n" +
+                        "  a = a - 1;                   \n" +
+                        "}                              \n");
         node.compile();
         node.run(contexts);
         System.out.println(contexts.get(0).get("c").toString());
