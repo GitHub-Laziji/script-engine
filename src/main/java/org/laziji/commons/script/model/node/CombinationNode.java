@@ -47,7 +47,8 @@ public class CombinationNode extends BaseNode {
                         new AssignmentNode(s),
                         new IfNode(s),
                         new WhileNode(s),
-                        new ReturnNode(s)
+                        new ReturnNode(s),
+                        new PrintNode(s)
                 }) {
                     try {
                         node.compile();

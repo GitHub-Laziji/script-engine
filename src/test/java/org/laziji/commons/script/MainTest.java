@@ -27,13 +27,14 @@ public class MainTest {
                         "let a = 3;                     \n" +
                         "let b = 4;                     \n" +
                         "let c = a + 3 + sum(b);        \n" +
+                        "print c;                       \n" +
                         "                               \n" +
                         "while(a > 0) {                 \n" +
                         "  c = c + a;                   \n" +
                         "  a = a - 1;                   \n" +
-                        "}                              \n");
+                        "}                              \n" +
+                        "print c;                       \n");
         node.compile();
         node.run(contexts);
-        System.out.println(contexts.get(0).get("c").toString());
     }
 }
