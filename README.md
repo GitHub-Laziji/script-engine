@@ -12,12 +12,17 @@ function sum(n) {
 
 let a = 3;
 let b = 4;
-let c = a + 3 + sum(b); 
+let c = a + 3 + sum(b);
+print a;
+print b;
+print c;
+print a + b + c;
 
 while(a > 0){
     c = c + a;
     a = a - 1;
 }
+print c;
 ```
 
 ```java
@@ -38,14 +43,18 @@ public class MainTest {
                         "let a = 3;                     \n" +
                         "let b = 4;                     \n" +
                         "let c = a + 3 + sum(b);        \n" +
+                        "print a;                       \n" +
+                        "print b;                       \n" +
+                        "print c;                       \n" +
+                        "print a + b + c;               \n" +
                         "                               \n" +
                         "while(a > 0) {                 \n" +
                         "  c = c + a;                   \n" +
                         "  a = a - 1;                   \n" +
-                        "}                              \n");
+                        "}                              \n" +
+                        "print c;                       \n");
         node.compile();
         node.run(contexts);
-        System.out.println(contexts.get(0).get("c").toString());
     }
 }
 ```

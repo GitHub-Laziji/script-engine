@@ -27,7 +27,10 @@ public class MainTest {
                         "let a = 3;                     \n" +
                         "let b = 4;                     \n" +
                         "let c = a + 3 + sum(b);        \n" +
+                        "print a;                       \n" +
+                        "print b;                       \n" +
                         "print c;                       \n" +
+                        "print a + b + c;               \n" +
                         "                               \n" +
                         "while(a > 0) {                 \n" +
                         "  c = c + a;                   \n" +
