@@ -31,6 +31,7 @@ public class CombinationNode extends BaseNode {
                     new AssignmentNode(s),
                     new IfNode(s),
                     new WhileNode(s),
+                    new ForNode(s),
                     new ReturnNode(s),
                     new PrintNode(s)
             }) {

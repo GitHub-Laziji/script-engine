@@ -7,8 +7,10 @@ import org.laziji.commons.script.model.context.BlockContext;
 import org.laziji.commons.script.model.context.Context;
 import org.laziji.commons.script.model.context.LoopContext;
 import org.laziji.commons.script.model.value.Value;
+import org.laziji.commons.script.util.TextUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -28,46 +30,16 @@ public class WhileNode extends BaseNode {
 
     @Override
     public void compile() throws CompileException {
-        if (!preReg.matcher(this.segment).matches()) {
+        List<String> units = TextUtils.splitUnit(this.segment);
+        if (units.size() != 3) {
             throw new CompileException();
         }
-        int start = this.segment.indexOf('(');
-        if (start == -1) {
+        if (!units.get(0).equals("while") || units.get(1).charAt(0) != '(' || units.get(2).charAt(0) != '{') {
             throw new CompileException();
         }
-        int end = -1;
-        Stack<Character> brackets = new Stack<>();
-        Map<Character, Character> bracketsMatchMap = new HashMap<>();
-        bracketsMatchMap.put(')', '(');
-        bracketsMatchMap.put(']', '[');
-        bracketsMatchMap.put('}', '{');
-        for (int i = start; i < this.segment.length(); i++) {
-            char ch = segment.charAt(i);
-            if (ch == '(' || ch == '[' || ch == '{') {
-                brackets.push(ch);
-            } else if (ch == ')' || ch == ']' || ch == '}') {
-                if (brackets.isEmpty() || !bracketsMatchMap.get(ch).equals(brackets.pop())) {
-                    throw new CompileException();
-                }
-            }
-            if (brackets.isEmpty()) {
-                end = i;
-                break;
-            }
-        }
-        if (end == -1) {
-            throw new CompileException();
-        }
-
-        this.expressionNode = new ExpressionNode(this.segment.substring(start + 1, end));
+        this.expressionNode = new ExpressionNode(TextUtils.trimBrackets(units.get(1)));
         this.expressionNode.compile();
-
-        String body = this.segment.substring(end + 1);
-        Matcher matcher = bodyReg.matcher(body);
-        if (!matcher.matches()) {
-            throw new CompileException();
-        }
-        this.combinationNode = new CombinationNode(matcher.replaceAll("$1"));
+        this.combinationNode = new CombinationNode(TextUtils.trimBrackets(units.get(2)));
         this.combinationNode.compile();
     }
 

@@ -36,6 +36,10 @@ public class MainTest {
                         "  c = c + a;                   \n" +
                         "  a = a - 1;                   \n" +
                         "}                              \n" +
+                        "print c;                       \n" +
+                        "for(let i=1;i<3;i=i+1) {       \n" +
+                        "  c = c + 10;                  \n" +
+                        "}                              \n" +
                         "print c;                       \n");
         node.compile();
         node.run(contexts);

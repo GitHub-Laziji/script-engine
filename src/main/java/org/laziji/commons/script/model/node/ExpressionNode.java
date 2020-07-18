@@ -22,14 +22,19 @@ public class ExpressionNode extends BaseNode {
 
     @Override
     public void compile() throws CompileException {
-
         this.nodes = new ArrayList<>();
         this.operators = new ArrayList<>();
+        if (this.segment.isEmpty()) {
+            return;
+        }
         parse(0, this.segment.length() - 1);
     }
 
     @Override
     public Value run(Stack<Context> contexts) throws RunException, OperationException {
+        if (this.nodes.isEmpty()) {
+            return null;
+        }
         Stack<Value> values = new Stack<>();
         Stack<Operator> operators = new Stack<>();
         for (Node node : this.nodes) {
@@ -76,7 +81,7 @@ public class ExpressionNode extends BaseNode {
 
     private void parse(int l, int r) throws CompileException {
         int p = 0;
-        for (String[] operators : new String[][]{{"||"}, {"&&"}, {">", ">=", "<", "<=","=="}, {"+", "-"}, {"*", "/"}}) {
+        for (String[] operators : new String[][]{{"||"}, {"&&"}, {">", ">=", "<", "<=", "=="}, {"+", "-"}, {"*", "/"}}) {
             for (int i = r; i >= l; i--) {
                 char ch = this.segment.charAt(i);
                 if (ch == '(') {
