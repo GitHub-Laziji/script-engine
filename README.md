@@ -10,7 +10,7 @@ Java实现的类JS脚本引擎, 支持语法
 - `break` 跳出循环
 - `print` 打印变量
 
-## 实例
+## 脚本示例
 ```
 function sum(n) {
     if(n==1) {
@@ -42,6 +42,8 @@ for(let i = 1;i < 3;i = i + 1) {
 print c;
 ```
 
+
+## Java 运行示例
 ```java
 public class MainTest {
 
