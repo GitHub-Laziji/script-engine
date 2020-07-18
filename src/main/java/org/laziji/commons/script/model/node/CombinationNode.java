@@ -33,6 +33,7 @@ public class CombinationNode extends BaseNode {
                     new WhileNode(s),
                     new ForNode(s),
                     new ReturnNode(s),
+                    new BreakNode(s),
                     new PrintNode(s)
             }) {
                 try {
@@ -44,7 +45,7 @@ public class CombinationNode extends BaseNode {
                 }
             }
             if (matchNode == null) {
-                throw new CompileException();
+                throw new CompileException(s);
             }
             nodes.add(matchNode);
         }

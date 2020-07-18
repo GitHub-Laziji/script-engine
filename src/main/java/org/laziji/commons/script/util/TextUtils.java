@@ -132,8 +132,4 @@ public class TextUtils {
         return index;
     }
 
-
-    public static void main(String[] args) throws CompileException {
-        splitUnit("  function aaa(aa,bbb) {  ddd}").forEach(System.out::println);
-    }
 }

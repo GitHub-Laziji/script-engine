@@ -33,7 +33,6 @@ public class ForNode extends BaseNode {
             throw new CompileException();
         }
         List<String> segments = TextUtils.splitSegment(TextUtils.trimBrackets(units.get(1)));
-        segments.forEach(System.out::println);
         if (segments.size() != 3) {
             throw new CompileException();
         }
