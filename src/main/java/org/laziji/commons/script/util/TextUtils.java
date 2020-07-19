@@ -57,7 +57,8 @@ public class TextUtils {
         while (index < text.length()) {
             index = skipSpace(text, index);
             int current = index;
-            if (isLeftBracket(text.charAt(current))) {
+            char currentChar = text.charAt(current);
+            if (isLeftBracket(currentChar)) {
                 Stack<Character> bracketStack = new Stack<>();
                 while (current < text.length()) {
                     char ch = text.charAt(current);
@@ -71,10 +72,25 @@ public class TextUtils {
                         break;
                     }
                 }
+            } else if (isMark(currentChar)) {
+                while (current < text.length() && isMark(text.charAt(current))) {
+                    current++;
+                }
+            } else if (isQuotes(currentChar)) {
+                current++;
+                while (current < text.length()) {
+                    char ch = text.charAt(current);
+                    current++;
+                    if (ch == '\\') {
+                        current++;
+                    } else if (ch == currentChar) {
+                        break;
+                    }
+                }
             } else {
                 while (current < text.length()) {
                     char ch = text.charAt(current);
-                    if (isSpace(ch) || isLeftBracket(ch)) {
+                    if (isSpace(ch) || isLeftBracket(ch) || isMark(ch) || isQuotes(ch)) {
                         break;
                     }
                     if (isRightBracket(ch)) {
@@ -116,6 +132,16 @@ public class TextUtils {
         return false;
     }
 
+    private static boolean isMark(char character) {
+        return character == '_' || character == '$' || character == '.' || character >= '0' && character <= '9'
+                || character >= 'a' && character <= 'z' || character >= 'A' && character <= 'Z';
+    }
+
+    private static boolean isQuotes(char character) {
+        return character == '\'' || character == '"';
+    }
+
+
     private static boolean matchBrackets(char leftBracket, char rightBracket) {
         for (char[] pair : BRACKET_PAIRS) {
             if (leftBracket == pair[0] && rightBracket == pair[1]) {
@@ -132,4 +158,7 @@ public class TextUtils {
         return index;
     }
 
+    public static void main(String[] args) throws CompileException {
+        splitUnit(" function aaa_das123(ddd,ccc) { return aa} +da-'asda\\''*123").forEach(System.out::println);
+    }
 }
