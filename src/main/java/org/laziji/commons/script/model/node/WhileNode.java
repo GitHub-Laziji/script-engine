@@ -3,17 +3,14 @@ package org.laziji.commons.script.model.node;
 import org.laziji.commons.script.exception.CompileException;
 import org.laziji.commons.script.exception.OperationException;
 import org.laziji.commons.script.exception.RunException;
-import org.laziji.commons.script.model.context.BlockContext;
 import org.laziji.commons.script.model.context.Context;
 import org.laziji.commons.script.model.context.LoopContext;
+import org.laziji.commons.script.model.context.LoopUnitContext;
 import org.laziji.commons.script.model.value.Value;
 import org.laziji.commons.script.util.TextUtils;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Stack;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class WhileNode extends BaseNode {
@@ -51,7 +48,7 @@ public class WhileNode extends BaseNode {
             if (context.isClose()) {
                 break;
             }
-            contexts.push(new BlockContext());
+            contexts.push(new LoopUnitContext());
             combinationNode.run(contexts);
             contexts.pop();
         }

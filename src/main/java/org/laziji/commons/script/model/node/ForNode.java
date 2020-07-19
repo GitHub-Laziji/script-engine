@@ -3,9 +3,9 @@ package org.laziji.commons.script.model.node;
 import org.laziji.commons.script.exception.CompileException;
 import org.laziji.commons.script.exception.OperationException;
 import org.laziji.commons.script.exception.RunException;
-import org.laziji.commons.script.model.context.BlockContext;
 import org.laziji.commons.script.model.context.Context;
 import org.laziji.commons.script.model.context.LoopContext;
+import org.laziji.commons.script.model.context.LoopUnitContext;
 import org.laziji.commons.script.model.value.Value;
 import org.laziji.commons.script.util.TextUtils;
 
@@ -64,7 +64,7 @@ public class ForNode extends BaseNode {
             if (context.isClose()) {
                 break;
             }
-            contexts.push(new BlockContext());
+            contexts.push(new LoopUnitContext());
             combinationNode.run(contexts);
             contexts.pop();
             if (this.assignmentNode != null) {

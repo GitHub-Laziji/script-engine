@@ -34,6 +34,7 @@ public class CombinationNode extends BaseNode {
                     new ForNode(s),
                     new ReturnNode(s),
                     new BreakNode(s),
+                    new ContinueNode(s),
                     new PrintNode(s)
             }) {
                 try {
