@@ -5,6 +5,16 @@ import org.laziji.commons.script.exception.OperationException;
 public abstract class BaseValue implements Value {
 
     @Override
+    public void setAttribute(String name, Value o) {
+
+    }
+
+    @Override
+    public Value getAttribute(String name) {
+        return null;
+    }
+
+    @Override
     public Value add(Value o) throws OperationException {
         throw new OperationException("Unrealized.");
     }
