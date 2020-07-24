@@ -2,16 +2,21 @@ package org.laziji.commons.script.model.value;
 
 import org.laziji.commons.script.exception.OperationException;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 public abstract class BaseValue implements Value {
+
+    private Map<String, Value> attributes = new ConcurrentHashMap<>();
 
     @Override
     public void setAttribute(String name, Value o) {
-
+        attributes.put(name, o);
     }
 
     @Override
     public Value getAttribute(String name) {
-        return null;
+        return attributes.get(name);
     }
 
     @Override

@@ -15,6 +15,11 @@ public class NumberValue extends BaseValue {
     }
 
     @Override
+    public void setAttribute(String name, Value o) {
+
+    }
+
+    @Override
     public Value add(Value o) throws OperationException {
         if (o instanceof NumberValue) {
             this.value += ((NumberValue) o).getValue();
