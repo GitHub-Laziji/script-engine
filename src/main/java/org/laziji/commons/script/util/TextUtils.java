@@ -19,7 +19,7 @@ public class TextUtils {
         return text;
     }
 
-    public static int nextSegmentIndexFromLeft(String text, int from) throws CompileException {
+    public static int nextSegmentIndex(String text, int from) throws CompileException {
         Stack<Character> bracketStack = new Stack<>();
         for (int i = from; i < text.length(); i++) {
             char ch = text.charAt(i);
@@ -44,7 +44,7 @@ public class TextUtils {
         boolean omit = false;
         int i = 0;
         do {
-            int next = nextSegmentIndexFromLeft(text, i);
+            int next = nextSegmentIndex(text, i);
             char pre = text.charAt(next - 1);
             if (pre == ';') {
                 String segment = text.substring(i, next - 1).trim();
@@ -59,6 +59,10 @@ public class TextUtils {
             i = next;
         } while (i < text.length());
         return segments;
+    }
+
+    public static int nextUnitIndexFromLeft(String text, int from) throws CompileException {
+        return -1;
     }
 
     public static List<String> splitUnit(String text) throws CompileException {
