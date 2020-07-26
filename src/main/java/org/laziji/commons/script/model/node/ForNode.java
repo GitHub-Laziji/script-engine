@@ -32,7 +32,7 @@ public class ForNode extends BaseNode {
         if (!units.get(0).equals("for") || units.get(1).charAt(0) != '(' || units.get(2).charAt(0) != '{') {
             throw new CompileException();
         }
-        List<String> segments = TextUtils.splitSegment(TextUtils.trimBrackets(units.get(1)));
+        List<String> segments = TextUtils.splitSegment(TextUtils.trimBrackets(units.get(1)), true, true);
         if (segments.size() != 3) {
             throw new CompileException();
         }

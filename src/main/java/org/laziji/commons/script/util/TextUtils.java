@@ -19,7 +19,7 @@ public class TextUtils {
         return text;
     }
 
-    public static int nextSegmentIndex(String text, int from) throws CompileException {
+    public static int nextSegmentIndex(String text, int from, boolean strict, boolean ignoreTerminator) throws CompileException {
         Stack<Character> bracketStack = new Stack<>();
         for (int i = from; i < text.length(); i++) {
             char ch = text.charAt(i);
@@ -31,7 +31,7 @@ public class TextUtils {
                 }
             }
             if (bracketStack.isEmpty()) {
-                if (ch == ';' || ch == '}' || i == text.length() - 1) {
+                if (ch == ';' || !strict && ch == '}' || ignoreTerminator && i == text.length() - 1) {
                     return i + 1;
                 }
             }
@@ -39,12 +39,12 @@ public class TextUtils {
         throw new CompileException();
     }
 
-    public static List<String> splitSegment(String text) throws CompileException {
+    public static List<String> splitSegment(String text, boolean strict, boolean ignoreTerminator) throws CompileException {
         List<String> segments = new ArrayList<>();
         boolean omit = false;
         int i = 0;
         do {
-            int next = nextSegmentIndex(text, i);
+            int next = nextSegmentIndex(text, i, strict, ignoreTerminator);
             char pre = text.charAt(next - 1);
             if (pre == ';') {
                 String segment = text.substring(i, next - 1).trim();

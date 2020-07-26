@@ -20,7 +20,7 @@ public class CombinationNode extends BaseNode {
     @Override
     public void compile() throws CompileException {
         this.nodes = new ArrayList<>();
-        for (String s : TextUtils.splitSegment(this.segment)) {
+        for (String s : TextUtils.splitSegment(this.segment, false, false)) {
             if (s.isEmpty()) {
                 continue;
             }
