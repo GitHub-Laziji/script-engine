@@ -19,12 +19,9 @@ public class TextUtils {
         return text;
     }
 
-    public static List<String> splitSegment(String text) throws CompileException {
-        List<String> segments = new ArrayList<>();
+    public static int nextSegmentIndexFromLeft(String text, int from) throws CompileException {
         Stack<Character> bracketStack = new Stack<>();
-        int start = 0;
-        boolean omit = false;
-        for (int i = 0; i < text.length(); i++) {
+        for (int i = from; i < text.length(); i++) {
             char ch = text.charAt(i);
             if (isLeftBracket(ch)) {
                 bracketStack.push(ch);
@@ -34,20 +31,33 @@ public class TextUtils {
                 }
             }
             if (bracketStack.isEmpty()) {
-                if (ch == ';') {
-                    String segment = text.substring(start, i).trim();
-                    if (!omit || !segment.isEmpty()) {
-                        segments.add(segment);
-                    }
-                    omit = false;
-                    start = i + 1;
-                } else if (ch == '}' || i == text.length() - 1) {
-                    segments.add(text.substring(start, i + 1).trim());
-                    omit = true;
-                    start = i + 1;
+                if (ch == ';' || ch == '}' || i == text.length() - 1) {
+                    return i + 1;
                 }
             }
         }
+        throw new CompileException();
+    }
+
+    public static List<String> splitSegment(String text) throws CompileException {
+        List<String> segments = new ArrayList<>();
+        boolean omit = false;
+        int i = 0;
+        do {
+            int next = nextSegmentIndexFromLeft(text, i);
+            char pre = text.charAt(next - 1);
+            if (pre == ';') {
+                String segment = text.substring(i, next - 1).trim();
+                if (!omit || !segment.isEmpty()) {
+                    segments.add(segment);
+                }
+                omit = false;
+            } else if (pre == '}' || next == text.length()) {
+                segments.add(text.substring(i, next).trim());
+                omit = true;
+            }
+            i = next;
+        } while (i < text.length());
         return segments;
     }
 
