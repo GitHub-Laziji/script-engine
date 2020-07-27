@@ -11,6 +11,12 @@ public class TextUtils {
     private static final char[][] BRACKET_PAIRS = {{'(', ')'}, {'[', ']'}, {'{', '}'}};
     private static final char[] SPACES = {' ', '\r', '\n', '\t', '\f'};
 
+    /**
+     * 去除两端空格及括号
+     *
+     * @param text 文本
+     * @return 去括号后的文本
+     */
     public static String trimBrackets(String text) {
         text = text.trim();
         if (matchBrackets(text.charAt(0), text.charAt(text.length() - 1))) {
@@ -19,6 +25,16 @@ public class TextUtils {
         return text;
     }
 
+    /**
+     * 获取下一个代码片段索引
+     *
+     * @param text             文本
+     * @param from             开始索引
+     * @param strict           是否严格模式, 每个代码段后需要分号
+     * @param ignoreTerminator 是否忽略结尾分号
+     * @return 代码段
+     * @throws CompileException 解析失败
+     */
     public static int nextSegmentIndex(String text, int from, boolean strict, boolean ignoreTerminator) throws CompileException {
         Stack<Character> bracketStack = new Stack<>();
         for (int i = from; i < text.length(); i++) {
@@ -39,6 +55,15 @@ public class TextUtils {
         throw new CompileException();
     }
 
+    /**
+     * 分割文本
+     *
+     * @param text             文本
+     * @param strict           是否严格模式, 每个代码段后需要分号
+     * @param ignoreTerminator 是否忽略结尾分号
+     * @return 代码段
+     * @throws CompileException 解析失败
+     */
     public static List<String> splitSegment(String text, boolean strict, boolean ignoreTerminator) throws CompileException {
         List<String> segments = new ArrayList<>();
         boolean omit = false;
@@ -61,10 +86,13 @@ public class TextUtils {
         return segments;
     }
 
-    public static int nextUnitIndexFromLeft(String text, int from) throws CompileException {
-        return -1;
-    }
-
+    /**
+     * 按最小单元分割文本
+     *
+     * @param text 文本
+     * @return 代码段
+     * @throws CompileException 解析失败
+     */
     public static List<String> splitUnit(String text) throws CompileException {
         List<String> units = new ArrayList<>();
         int index = 0;
@@ -117,6 +145,17 @@ public class TextUtils {
             index = current;
         }
         return units;
+    }
+
+    /**
+     * 按给定的字符集分割文本
+     *
+     * @param text   文本
+     * @param tokens 字符集
+     * @return 代码段
+     */
+    public static List<String> split(String text, List<String> tokens) {
+        return null;
     }
 
     private static boolean isLeftBracket(char character) {
