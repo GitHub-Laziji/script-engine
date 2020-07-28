@@ -147,17 +147,6 @@ public class TextUtils {
         return units;
     }
 
-    /**
-     * 按给定的字符集分割文本
-     *
-     * @param text   文本
-     * @param tokens 字符集
-     * @return 代码段
-     */
-    public static List<String> split(String text, List<String> tokens) {
-        return null;
-    }
-
     private static boolean isLeftBracket(char character) {
         for (char[] pair : BRACKET_PAIRS) {
             if (character == pair[0]) {

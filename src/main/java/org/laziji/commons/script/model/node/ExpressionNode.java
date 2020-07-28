@@ -146,4 +146,18 @@ public class ExpressionNode extends BaseNode {
             return null;
         }
     }
+
+    private class ExpressionTree{
+        /**
+         * =
+         * || &&
+         * == > < >= <=
+         * + -
+         * * /
+         * !
+         */
+        private Operator operator;
+        private List<ExpressionTree> children;
+
+    }
 }
